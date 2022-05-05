@@ -17,8 +17,8 @@ contract BNB_CROPS {
     uint256 public MARKET_EGGS_DIVISOR = 5;
     uint256 public MARKET_EGGS_DIVISOR_SELL = 2;
 
-    uint256 public MIN_INVEST_LIMIT = 10 * 1e18; /** 10 BNB  **/
-    uint256 public WALLET_DEPOSIT_LIMIT = 15000 * 1e18; /** 15,000 BNB  **/
+    uint256 public MIN_INVEST_LIMIT = 1 * 1e16; /** 0.01 BNB  **/
+    uint256 public WALLET_DEPOSIT_LIMIT = 50 * 1e18; /** 50 BNB  **/
 
 	uint256 public COMPOUND_BONUS = 20;
 	uint256 public COMPOUND_BONUS_MAX_TIMES = 10;
@@ -360,38 +360,37 @@ contract BNB_CROPS {
         require(msg.sender == owner, "Admin use only.");
         owner = value;
     }
-/**    
+
 
     function CHANGE_DEV1(address value) external {
-        require(msg.sender == owner, "Admin use only.");
+        require(msg.sender == dev1, "Admin use only.");
         dev1 = payable(value);
     }
 
     function CHANGE_DEV2(address value) external {
-        require(msg.sender == owner, "Admin use only.");
+        require(msg.sender == dev2, "Admin use only.");
         dev2 = payable(value);
     }
 
     function CHANGE_DEV3(address value) external {
-        require(msg.sender == owner, "Admin use only.");
+        require(msg.sender == dev3, "Admin use only.");
         dev3 = payable(value);
     }
 
     function CHANGE_PARTNER1(address value) external {
-        require(msg.sender == owner, "Admin use only.");
+        require(msg.sender == prtnr1, "Admin use only.");
         prtnr1 = payable(value);
     }
 
     function CHANGE_PARTNER2(address value) external {
-        require(msg.sender == owner, "Admin use only.");
+        require(msg.sender == prtnr2, "Admin use only.");
         prtnr2 = payable(value);
     }
 
     function CHANGE_MKT(address value) external {
-        require(msg.sender == owner, "Admin use only.");
+        require(msg.sender == mkt, "Admin use only.");
         mkt = payable(value);
     }
-**/    
 
     /** percentage setters **/
 
