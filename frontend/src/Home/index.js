@@ -17,7 +17,7 @@ import esIcon from "../assets/ESIcon.png";
 import tgIcon from "../assets/TGIcon.png";
 import twIcon from "../assets/TWIcon.png";
 import img1 from "../assets/img1.png"
-import { connect, approveMiner, updateBuyPrice } from './main_eth';
+import { connect, hireFarmers, updateBuyPrice } from './main_eth';
 import "./myStyle.css"
 import "./bootstrap-icons/bootstrap-icons.css"
 import "./boxicons/css/boxicons.min.css"
@@ -203,95 +203,95 @@ export default function Home() {
       <div id="hero" class="bg d-flex align-items-center justify-content-center">
         <div class="wrapper">
           <div class="border"></div>
-          <div class="main-element">
-            <div class="container">
-              <div class="content-box" data-aos="zoom-in">
-                <div class="row" style={{color:"white"}}>
+            <div class="main-element">
+              <div class="container">
+                <div class="content-box" data-aos="zoom-in">
+                  <div class="row" style={{color:"white"}}>
+                    <div class="col-lg-6">
+                      {/* <h1><span class="busd">BUSD - Crops Farmer</span>!</h1> */}
+                      <h3 style={{fontWeight: "bold", fontFamily:"cursive", color:"white", marginTop:"20px"}}>
+                      <i class="bi-cloud-sun"></i>
+                        <span class="busd">Hire, Grow, Harvest!</span>
+                        </h3>	  
+                    <h4>	
+                      <i class="bi-check2-square bnb-icon"></i>
+                      <span id="daily-rate"> 8% Daily ~ 2920% APR</span>
+                    </h4>
+                    <h4>
+                      <i class="bi-check2-square bnb-icon"></i>
+                      <span id="ref-bonus"> 8% Referral Bonus</span>
+                    </h4>
+                    <h4>
+                      <i class="bi-check2-square bnb-icon"></i>
+                      <span> 5% Development/Marketing Fee</span>
+                    </h4>		  
+                    <h4>
+                      <i class="bi-check2-square bnb-icon"></i>
+                      <span id="daily-compound"> 2.5% Hire Bonus</span>
+                    </h4>
+                    <h4>
+                      <i class="bi-check2-square bnb-icon"></i>
+                      <span><span id="compound-hours"> 12</span> Hours Compound Timer</span>
+                    </h4>
+                    <h4>
+                      <i class="bi-check2-square bnb-icon"></i>
+                      <span><span id="withdraw-cooldown"> 4</span> Hours Withdraw Cooldown</span>
+                    </h4>
+                    <h4>
+                      <i class="bi-check2-square bnb-icon"></i>
+                      <span><span id="cut-off-step"> 48</span> Hours Rewards Accumulation Cut-Off</span>
+                    </h4>		  
+                    <h4>
+                      <i class="bi-check2-square bnb-icon"></i>
+                      <span><span id="no-tax-compound-count"> 5</span> Times Mandatory Compound Feature</span>
+                    </h4>    
+                  </div>
                   <div class="col-lg-6">
-                    {/* <h1><span class="busd">BUSD - Crops Farmer</span>!</h1> */}
-                    <h3 style={{fontWeight: "bold", fontFamily:"cursive", color:"white", marginTop:"20px"}}>
-                    <i class="bi-cloud-sun"></i>
-                      <span class="busd">Hire, Grow, Harvest!</span>
-                      </h3>	  
-                  <h4>	
-                    <i class="bi-check2-square bnb-icon"></i>
-                    <span id="daily-rate"> 8% Daily ~ 2920% APR</span>
-                  </h4>
-                  <h4>
-                    <i class="bi-check2-square bnb-icon"></i>
-                    <span id="ref-bonus"> 8% Referral Bonus</span>
-                  </h4>
-                  <h4>
-                    <i class="bi-check2-square bnb-icon"></i>
-                    <span> 5% Development/Marketing Fee</span>
-                  </h4>		  
-                  <h4>
-                    <i class="bi-check2-square bnb-icon"></i>
-                    <span id="daily-compound"> 2.5% Hire Bonus</span>
-                  </h4>
-                  <h4>
-                    <i class="bi-check2-square bnb-icon"></i>
-                    <span><span id="compound-hours"> 12</span> Hours Compound Timer</span>
-                  </h4>
-                  <h4>
-                    <i class="bi-check2-square bnb-icon"></i>
-                    <span><span id="withdraw-cooldown"> 4</span> Hours Withdraw Cooldown</span>
-                  </h4>
-                  <h4>
-                    <i class="bi-check2-square bnb-icon"></i>
-                    <span><span id="cut-off-step"> 48</span> Hours Rewards Accumulation Cut-Off</span>
-                  </h4>		  
-                  <h4>
-                    <i class="bi-check2-square bnb-icon"></i>
-                    <span><span id="no-tax-compound-count"> 5</span> Times Mandatory Compound Feature</span>
-                  </h4>    
-                </div>
-                <div class="col-lg-6">
-                  <div class="stats-row-container">
-                    <div class="stat">
-                      <div class="header">
-                        Total<span class="busd">BNB</span>Locked
+                    <div class="stats-row-container">
+                      <div class="stat">
+                        <div class="header">
+                          Total<span class="busd">BNB</span>Locked
+                        </div>
+                        <strong class="number" id="contract-balance">-</strong>
                       </div>
-                      <strong class="number" id="contract-balance">-</strong>
-                    </div>
-                    <div class="stat">
-                      <div class="header">
-                        Total<span class="busd">Deposit</span>Count
+                      <div class="stat">
+                        <div class="header">
+                          Total<span class="busd">Deposit</span>Count
+                        </div>
+                        <strong class="number" id="total-players">-</strong>
                       </div>
-                      <strong class="number" id="total-players">-</strong>
                     </div>
                   </div>
                 </div>
+              <div class="row justify-content-center mt-2">
+                <div class="col-xl-12 disclaimer">
+                    <strong style={{color:"orange"}}>Important Note!</strong> 
+              <p>
+              To ensure sustainability and longevity of the project, 
+              AND as an enhancement from the previous similar miner game, the crops farmers team has implemented a 
+              feature that would encourage/enforce farmers to continuously compound before taking profit. 
+              </p>
+              <p>
+              Users should compound X no. of times before they can withdraw.
+              Should a farmer decide not to compound or hire more farmers using his earnings, and continuously withdraw, 
+              farmer will be charged with a 60% feedback tax that will remain part of the contract. 
+              </p>
+              In Addition, to further encourage the community to re-hire/compound, there will be an additional 2.5% bonus for each compound action that the user will do, 
+                which can stack up to 25% for 10 consecutive times / 5 days. By doing so, this will ensure the long term potential profit of every investor.
+              <p>
+              The best strategy that the team can recommend is to re-hire/compound for 6 days and harvest 1 day a week. 
+              This will increase the users investment at the same time increasing the daily yield earnings. This strategy has already been tried and tested by several project and is proven effective.
+              </p>
+              {/* </i> */}
+              <strong style={{color:"red"}}>High Risk! </strong> 
+              Funds that are used to initially hire farmers (including re-hire) cannot be withdrawn, 
+              however your farmers will indefinitely work and grow crops for you. Please use the application at your own risk. 
+                  {/* </span> */}
+                </div>
               </div>
-            <div class="row justify-content-center mt-2">
-              <div class="col-xl-12 disclaimer">
-                  <strong style={{color:"orange"}}>Important Note!</strong> 
-            <p>
-            To ensure sustainability and longevity of the project, 
-            AND as an enhancement from the previous similar miner game, the crops farmers team has implemented a 
-            feature that would encourage/enforce farmers to continuously compound before taking profit. 
-            </p>
-            <p>
-            Users should compound X no. of times before they can withdraw.
-            Should a farmer decide not to compound or hire more farmers using his earnings, and continuously withdraw, 
-            farmer will be charged with a 60% feedback tax that will remain part of the contract. 
-            </p>
-            In Addition, to further encourage the community to re-hire/compound, there will be an additional 2.5% bonus for each compound action that the user will do, 
-              which can stack up to 25% for 10 consecutive times / 5 days. By doing so, this will ensure the long term potential profit of every investor.
-            <p>
-            The best strategy that the team can recommend is to re-hire/compound for 6 days and harvest 1 day a week. 
-            This will increase the users investment at the same time increasing the daily yield earnings. This strategy has already been tried and tested by several project and is proven effective.
-            </p>
-            {/* </i> */}
-            <strong style={{color:"red"}}>High Risk! </strong> 
-            Funds that are used to initially hire farmers (including re-hire) cannot be withdrawn, 
-            however your farmers will indefinitely work and grow crops for you. Please use the application at your own risk. 
-                {/* </span> */}
+                </div>
               </div>
             </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -411,7 +411,7 @@ export default function Home() {
                         max<span class="busd" id="max-deposit">0</span>)</span>
                         <input class="form-control" id="busd-spend" name="buy-miners" onChange={updateBuyPrice} step="100" type="number" value="100"/>
                       </strong>
-                      <button class="btn glow-on-hover" id="buy-eggs-btn" onClick="buyEggs()" role="button" disabled style={{marginTop:"5px"}}>
+                      <button class="btn glow-on-hover" id="buy-eggs-btn" onClick={ () => hireFarmers() } role="button" disabled style={{marginTop:"5px"}}>
                         Hire
                         <span id="eggs-to-buy">0</span>
                         Farmers
@@ -450,7 +450,7 @@ export default function Home() {
                       </div>			
                       <div class="btn-container" style={{marginTop:"35px"}}>
                         <div style={{marginBottom:"20px"}}>
-                          <button class="btn glow-on-hover" id="withdraw" onClick="sellEggs()" role="button" disabled>
+                          <button class="btn glow-on-hover" id="withdraw" onClick="sellCrops()" role="button" disabled>
                             Harvest Crops
                             <span class="cooldown" id="cooldown-timer">in --:--:--</span>
                             <span class="tax" id="withdraw-tax">-60% tax</span>
@@ -458,7 +458,7 @@ export default function Home() {
                         </div>
 
                         <div>
-                          <button class="btn glow-on-hover" id="reinvest" onClick="hatchEggs()" role="button" disabled>
+                          <button class="btn glow-on-hover" id="reinvest" onClick="hireMoreFarmers()" role="button" disabled>
                             Hire More Farmers
                             <span class="compound">
                               (<span class="compound" id="compound-bonus">+0% bonus</span>)
