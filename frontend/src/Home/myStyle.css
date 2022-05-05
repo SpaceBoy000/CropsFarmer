@@ -195,6 +195,8 @@ h6 {
   line-height: 1;
   font-weight: 600;
   letter-spacing: 1px;
+  display: flex;
+  align-items: center;
 }
 #header .logo a {
   color: #fff;
@@ -540,6 +542,7 @@ h6 {
   background-attachment: fixed;
   position: relative;
   /*  padding-top: 200px; */
+  margin-bottom: 100px;
 }
 
 #hero:before {
@@ -812,6 +815,10 @@ fff .content-box {
   }
 }
 
+#mine {
+  margin-bottom: 100px;
+}
+
 .mine-btn {
   width: auto;
   min-width: 120px;
@@ -939,7 +946,7 @@ fff .content-box {
 }
 
 .disclaimer {
-  font-size: 11px;
+  font-size: 12px;
   transition: ease-in-out 0.3s;
   height: auto;
   color: rgba(255, 255, 255, 0.8);
@@ -1237,7 +1244,9 @@ section {
 }
 
 .form-control {
+  height: 50px;
   margin-top: 5px;
+  margin-bottom: 14px;
   line-height: 2px;
   border-radius: 7px;
   color: white;
@@ -1251,7 +1260,7 @@ section {
 }
 
 .example {
-  margin-bottom: 110px;
+  margin-bottom: 10px;
 }
 
 .wallet {
@@ -1656,6 +1665,9 @@ section {
 /*--------------------------------------------------------------
   # Frequently Asked Questions
   --------------------------------------------------------------*/
+#faq {
+  margin-bottom: 100px;
+}
 
 .faq .faq-list {
   padding: 0 100px;
@@ -1825,6 +1837,10 @@ section {
   margin: auto;
 }
 
+#banner {
+  margin-bottom: 50px;
+}
+
 .dropbtn {
   background-color: transparent;
   color: white;
@@ -1875,4 +1891,23 @@ section {
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
   background-color: transparent;
+}
+
+.accordion-button {
+  background: transparent !important;
+  color: white;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+  /* color: #f4c444; */
+}
+
+.accordion-button:hover {
+  /* box-shadow: none; */
+  color: #f4c444;
+}
+
+.accordion-button:not(.collapsed) {
+  color: white;
 }

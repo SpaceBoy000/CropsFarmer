@@ -19,6 +19,115 @@ import twIcon from "../assets/TWIcon.png";
 import img1 from "../assets/img1.png"
 import { connect, approveMiner, updateBuyPrice } from './main_eth';
 import "./myStyle.css"
+import "./bootstrap-icons/bootstrap-icons.css"
+import "./boxicons/css/boxicons.min.css"
+import "./remixicon/remixicon.css"
+import FAQ from "./components/FAQ"
+import { Accordion, Col, Row } from "react-bootstrap";
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+
+const faqData = [
+  {
+    title: `What is the BNB KingDom?`,
+    content: 
+    <div
+      id="faq-list-1"
+      class="collapse show"
+      data-bs-parent=".faq-list"
+    >
+      <p>
+        The BNB KingDom is a decentralized application built on the Binance Smart Chain. 
+        The object of the game is to hire more farmers sooner and more often than other players. This in turn earns you more BNB faster. 
+        These Farmers work for you tirelessly, giving you a daily average of 8% of your farmers' value.
+      </p>
+      <p>
+        The daily percentage return depends on players' actions that are taken within the platform that impact the farmers's efficiency rate. 
+        The farming efficiency rate rises and falls as users buy Farmers, re-hire your earnings and sell your Crops for BNB.
+      </p>
+      <p>
+        Once Farmers are Bought, they cannot be sold, and the investment made to re-hire them (either through hire or re-hiring) cannot be taken back. 
+        However, once bought, Farmers will not stop producing yield.
+      </p>
+    </div>,
+  },
+  {
+    title: `What makes it different from other similar platforms?`,
+    content: <div
+        id="faq-list-2"
+        class="collapse show"
+        data-bs-parent=".faq-list"
+      >
+        <p> The BNB KingDom has several anti-dumping and anti-whale measures in place to ensure the longevity of the project. 
+        These measures include maximum deposits, as well as a cutoff time AND a cooldown time for withdrawals.
+        </p>
+        <p>
+        The cutoff time is the amount of time it will take for your "cart" to be full of rewards. 
+        Once the bag is full, it will stop filling until you've taken some action in the game. 
+        This is to prevent whales from letting their rewards accumulate for a long time, 
+        and removes the false impression the contract value is going up when most of it is rewards the whale is waiting to withdraw at once.
+        </p>
+        <p>
+        The withdraw cooldown time is the amount of time one has to wait before they can make another withdrawal. 
+        This also prevents the contract balance from decreasing in value too fast. 
+        If the team decides it's necessary to protect the contract balance, 
+        this time period can be adjusted to slow down the rate of withdrawals, 
+        but it can only be set to a value less than or equal to 24 hours (per contract rules).
+        </p>
+        <p>
+        The compound count is the number of times the user has compounded. By default, the required compound count by the platform is 5, meaning the user will have to compound 5 times(compound once every 12 hours) before they can withdraw without the feedback tax of 60%. This feature in essense will ensure the longevity and stability of the project.
+        </p>
+        <p>
+        To reward users who compound, 
+        there is a bonus when you re-hire your daily crops earnings instead of selling them. 
+        The bonus increases 2.5% every 12 hours that you compound without withdrawing (25% max after 5 days). 
+        This incentivizes the user to compound more often, which will help boost the farms efficiency rate in the long run. 
+        To be able to utilize the re-hire bonus feature, the player must not compound before the provided timer reaches 00:00:00.
+        </p>
+        <p>
+        For the players who choose to not play the game and only sell, 
+        there will be a 60% tax on those sells that will stay in the contract. 
+        If the player makes two or more consecutive sells, this tax will be applied. 
+        The only way for the user to not pay the 60% tax is to compound 5 times before making another withdrawal.
+        </p>
+      </div>
+  },
+  {
+    title: `How does this platform work?`,
+    content: <div
+    id="faq-list-3"
+    class="collapse show"
+    data-bs-parent=".faq-list">
+    <p>
+            This platform work similarly to a financial market, where an asset has intrinsic value that is relative to the supply or demand of said asset. 
+      Farmers are purchased with a pre-determined currency at a price relative to the Farmers's current mining efficiency rate. 
+      After the Farmers are purchased, they go to work for you right away to give you the best yield on your investment possible, 
+      for as long as possible. Just as any other asset bought and sold on an open market, the price of a Farmers will fluctuate over time, 
+      as will the mining efficiency rate, as you and other players recruit Farmers, compound earnings and sell earnings. 
+      To put it plainly, the more demand for the Farmers, the more they will increase in value and the more yield they will produce. 
+      Inversely, when the demand decreases, so will the value of the Farmers and their daily return on investment.
+    </p>
+    <p>
+            The main difference between a this game and a traditional financial market is that a recruited Farmers cannot be sold, 
+      only the value they provide can be sold. As the players of the game as a whole compound their earnings and make new deposits, 
+      the game efficiency rate will stay relatively constant, but the moment players start to sell more than they are compounding, 
+      the efficiency rate will begin to drop as to preserve the TVL and longevity of the game.
+    </p>
+  </div>
+  },
+  {
+    title: `What is the recommended strategy?`,
+    content: <div
+        id="faq-list-4"
+        class="collapse show"
+        data-bs-parent=".faq-list">
+        <p>
+          The best strategy that the team can recommend is to re-hire/compound for 6 days and harvest 1 day a week. 
+          This will increase the users investment at the same time increasing the daily yield earnings. This strategy has already been tried and tested by several project and is proven effective both for the short and long term.
+        </p>
+      </div>
+  }
+]
+
 
 const Wrapper = styled("div")(({ theme }) => ({
   // maxWidth: 800,
@@ -39,32 +148,31 @@ export default function Home() {
           <div class="logo me-auto me-lg-0">
               <img style={{height: "100%", width: "40px", paddingRight: "5px",  fontFamily: "cursive"}} src="./assets/img/cropslogo.png" alt=""/>
               <div>
-                The <span class="busd">BUSD</span> Crops Farmer
+                <span class="busd">BNB KINGDOM</span>
               </div>
           </div>
           <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
-              <li>
+              {/* <li>
                 <a class="nav-link" href="./assets/img/The BUSD Crops Farmer.pdf" target="_blank"><img class="nav-logo" id="logo" alt="" src="./assets/img/ccs-audit.png"></img><strong>Audited by CyberCrimeShield™</strong></a>
-              </li>
+              </li> */}
               {/* <a class=" scrollto bnb-miner glow-on-hover" href="" target="_blank">BNB Crops Farmer Soon!</a> */}
-              <li> 
+              {/* <li> 
                 <a class="nav-link" href="https://pancakeswap.finance/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56" target="_blank"><img class="nav-logo" id="logo" alt="" src="./assets/img/pancakeswap.svg"></img><strong>Buy BUSD</strong></a>
-              </li>	 
+              </li>	  */}
               {/* <li>
                 <a class="nav-link scrollto" href="#faq">FAQs</a>
               </li> */}
-              <div class="dropdown">
+              {/* <div class="dropdown">
                 <button class="dropbtn"><img class="nav-logo" id="logo" alt="" src="./assets/img/crobfarmerllogo.png"/>Farms</button>
                 <div class="dropdown-content">
                   <a href="https://bit.ly/3MDcrxv"><img class="nav-logo" id="logo" alt="" src="./assets/img/crobfarmerllogo.png"/>BNB-BSC Crop Farmer</a>
                   <a href="https://bit.ly/3k0ODr1"><img class="nav-logo" id="logo" alt="" src="./assets/img/cropslogo.PNG"/>USDC-AVAX Crop Farmer</a>
                 </div>
-              </div>
+              </div> */}
               <li>
                 {/* <a class="nav-link" href="https://testnet.bscscan.com/address/0xa4be7b9f36495d07a1b1753c38cabc286af53757#code" target="_blank"><img class="nav-logo" id="logo" alt="" src="assets/img/bscscan-logo-light-circle.svg"></img><strong>Contract</strong></a> */}
                   <a class="nav-link" href="https://bscscan.com/address/0x8be8881C641Dc5A40845253Ee3eD04955eDFe96D#code" target="_blank"><img class="nav-logo" id="logo" alt="" src="./assets/img/bscscan-logo-light-circle.svg"></img><strong>Contract</strong></a>
-                
               </li>
               <li>
                 <a class="nav-link" href="https://twitter.com/BUSDCropFarmer" target="_blank"><img class="nav-logo" id="twitter" alt="" src="./assets/img/twitter.svg"></img><strong>Twitter</strong></a>
@@ -74,7 +182,7 @@ export default function Home() {
               </li>
               <li>
                 <a class="nav-link" >
-                  <button id="enableMetamask" class="btn connect-btn" onclick={connect}>Connect</button>
+                  <button id="enableMetamask" class="btn connect-btn" onClick={connect}>Connect</button>
                 </a>
               </li>
             </ul>
@@ -86,9 +194,9 @@ export default function Home() {
       <div id="banner">
         <div id="wrapper">
           <div id="container">
-          <a href="https://bit.ly/3ME8Y1D" target="_blank">
+          {/* <a href="https://bit.ly/3ME8Y1D" target="_blank"> */}
             <img class="banner-img" src="./assets/img/BNBHeader.PNG" alt="N.A.L.A. Apparel"/>
-          </a>
+          {/* </a> */}
           </div>
         </div>
       </div>
@@ -99,64 +207,63 @@ export default function Home() {
           <div class="main-element">
             <div class="container">
               <div class="content-box" data-aos="zoom-in">
-                <div class="row">
+                <div class="row" style={{color:"white"}}>
                   <div class="col-lg-6">
                     {/* <h1><span class="busd">BUSD - Crops Farmer</span>!</h1> */}
-                    <h3 style={{fontWeight: "bold", fontFamily:"cursive"}}>
+                    <h3 style={{fontWeight: "bold", fontFamily:"cursive", color:"white", marginTop:"20px"}}>
                     <i class="bi-cloud-sun"></i>
                       <span class="busd">Hire, Grow, Harvest!</span>
                       </h3>	  
                   <h4>	
                     <i class="bi-check2-square bnb-icon"></i>
-                    <span id="daily-rate">8% Daily ~ 2920% APR</span>
+                    <span id="daily-rate"> 8% Daily ~ 2920% APR</span>
                   </h4>
-              <h4>
-                <i class="bi-check2-square bnb-icon"></i>
-                <span id="ref-bonus">8% Referral Bonus</span>
-              </h4>
-              <h4>
-                <i class="bi-check2-square bnb-icon"></i>
-                <span>5% Development/Marketing Fee</span>
-              </h4>		  
-              <h4>
-                <i class="bi-check2-square bnb-icon"></i>
-                <span id="daily-compound">2.5% Hire Bonus</span>
-              </h4>
-              <h4>
-                <i class="bi-check2-square bnb-icon"></i>
-                <span><span id="compound-hours">12</span> Hours Compound Timer</span>
-              </h4>
-              <h4>
-                <i class="bi-check2-square bnb-icon"></i>
-                <span><span id="withdraw-cooldown">4</span> Hours Withdraw Cooldown</span>
-              </h4>
-              <h4>
-                <i class="bi-check2-square bnb-icon"></i>
-                <span><span id="cut-off-step">48</span> Hours Rewards Accumulation Cut-Off</span>
-              </h4>		  
-              <h4>
-                <i class="bi-check2-square bnb-icon"></i>
-                <span><span id="no-tax-compound-count">5</span> Times Mandatory Compound Feature</span>
-              </h4>    
-            </div>
-              <div class="col-lg-6">
-                <div class="stats-row-container">
-                  <div class="stat">
-                    <div class="header">
-                      Total<span class="busd">BUSD</span>Locked
+                  <h4>
+                    <i class="bi-check2-square bnb-icon"></i>
+                    <span id="ref-bonus"> 8% Referral Bonus</span>
+                  </h4>
+                  <h4>
+                    <i class="bi-check2-square bnb-icon"></i>
+                    <span> 5% Development/Marketing Fee</span>
+                  </h4>		  
+                  <h4>
+                    <i class="bi-check2-square bnb-icon"></i>
+                    <span id="daily-compound"> 2.5% Hire Bonus</span>
+                  </h4>
+                  <h4>
+                    <i class="bi-check2-square bnb-icon"></i>
+                    <span><span id="compound-hours"> 12</span> Hours Compound Timer</span>
+                  </h4>
+                  <h4>
+                    <i class="bi-check2-square bnb-icon"></i>
+                    <span><span id="withdraw-cooldown"> 4</span> Hours Withdraw Cooldown</span>
+                  </h4>
+                  <h4>
+                    <i class="bi-check2-square bnb-icon"></i>
+                    <span><span id="cut-off-step"> 48</span> Hours Rewards Accumulation Cut-Off</span>
+                  </h4>		  
+                  <h4>
+                    <i class="bi-check2-square bnb-icon"></i>
+                    <span><span id="no-tax-compound-count"> 5</span> Times Mandatory Compound Feature</span>
+                  </h4>    
+                </div>
+                <div class="col-lg-6">
+                  <div class="stats-row-container">
+                    <div class="stat">
+                      <div class="header">
+                        Total<span class="busd">BNB</span>Locked
+                      </div>
+                      <strong class="number" id="contract-balance">-</strong>
                     </div>
-                    <strong class="number" id="contract-balance">-</strong>
-                  </div>
-
-            <div class="stat">
-                    <div class="header">
-                      Total<span class="busd">Deposit</span>Count
+                    <div class="stat">
+                      <div class="header">
+                        Total<span class="busd">Deposit</span>Count
+                      </div>
+                      <strong class="number" id="total-players">-</strong>
                     </div>
-                    <strong class="number" id="total-players">-</strong>
                   </div>
                 </div>
               </div>
-            </div>
             <div class="row justify-content-center mt-2">
               <div class="col-xl-12 disclaimer">
                   <strong style={{color:"orange"}}>Important Note!</strong> 
@@ -177,20 +284,17 @@ export default function Home() {
             This will increase the users investment at the same time increasing the daily yield earnings. This strategy has already been tried and tested by several project and is proven effective.
             </p>
             {/* </i> */}
-            <strong style={{color:"red"}}>High Risk!</strong> 
+            <strong style={{color:"red"}}>High Risk! </strong> 
             Funds that are used to initially hire farmers (including re-hire) cannot be withdrawn, 
             however your farmers will indefinitely work and grow crops for you. Please use the application at your own risk. 
                 {/* </span> */}
               </div>
             </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-        </div>
-      </div>
-
-      
-
 
       <div id="main">
         <div id="mine" class="bg d-flex">
@@ -201,46 +305,46 @@ export default function Home() {
                 <div class="col-lg-2 stat">
                   <div class="header">
                     <i class="bi-bank"></i>
-                    <span>Initial Deposit</span>
+                    <span> Initial Deposit</span>
                   </div>
                   <strong id="initial-deposit" class="number">-</strong>
                   <div>
-                    <strong class="busd">BUSD</strong>
+                    <strong class="busd">BNB</strong>
                   </div>
                 </div>
                 <div class="col-lg-2 stat">
                   <div class="header">
                     <i class="bi-bank"></i>
-                    Total Deposit
+                     <span> Total Deposit</span>
                   </div>
                   <strong id="total-deposit" class="number">-</strong>
                   <div>
-                    <strong class="busd">BUSD</strong>
+                    <strong class="busd">BNB</strong>
                   </div>
                 </div>
                 <div class="col-lg-2 stat">
                   <div class="header">
                     <i class="bi-wallet2"></i>
-                    Sold Crops
+                     <span> Sold Crops</span>
                   </div>
                   <div>
                     <strong id="total-withdrawn" class="number">-</strong>
                   </div>
                   <div>
-                    <strong class="busd">BUSD</strong>
+                    <strong class="busd">BNB</strong>
                   </div>
                 </div>
                 <div class="col-lg-2 stat">
                   <div class="header">
                     <i class="bi-people"></i>
-                    Referral Rewards
-                    (<span id="ref-count">-</span>)
+                     <span> Referral Rewards </span>
+                     (<span id="ref-count"> - </span>)
                   </div>
                   <div>
                     <strong id="ref-rewards-busd" class="number">-</strong>
                   </div>
                   <div>
-                    <strong class="busd">BUSD</strong>
+                    <strong class="busd">BNB</strong>
                   </div>
                 </div>
               </div>
@@ -254,16 +358,11 @@ export default function Home() {
                             Hiring Example
                           </strong>
                           <div>
-                            <div>100<span class="busd">BUSD</span>gets you:</div>
-                            <div>
-                              <i class="bi-minecart"></i>
-                              Farmers:
-                              <span id="example-miners">0</span>
-                            </div>
+                            <div>1<span class="busd">BNB</span> = <span id="example-miners"> 0 </span> Farmers</div>
                             <div>
                               <i class="ri-coins-line ri-1x"></i>
-                              Daily:
-                              <span id="example-busd">0</span><span class="busd">BUSD</span>
+                              <span> Daily: </span>
+                              <span id="example-busd">0</span><span class="busd">BNB</span>
                             </div>
                           </div>
                         </div>
@@ -271,16 +370,28 @@ export default function Home() {
                       <div class="col-lg-4">
                         <div class="wallet">
                           <i class="bi-wallet2"></i>
-                          <strong>Wallet</strong>
+                          <strong> Wallet</strong>
                           <div>
                             <span id="user-balance">0</span>
-                            <span class="busd">BUSD</span>
+                            <span class="busd">BNB</span>
                           </div>
                         </div>
                       </div>
                     </div>
+                    <div class="timer">
+                      <i class="bi-hourglass-split"></i>
+                      <span> Cart will be full in</span>
+                    </div>
+                    <div style={{textAlign:"center"}}>
+                      <span id="claim-timer">--:--:--</span>
+                    </div>
+                    <div class="timer" style={{padding:"14px"}}>
+                      <i class="bi bi-clock"></i>
+                      <span> Time until next hire bonus is activated: </span>
+                      <span style={{fontWeight:"700"}}id="compound-timer"> --:--:--</span>
+                    </div>
                     <div class="btn-container">
-                      <div class="approve-container">
+                      {/* <div class="approve-container">
                         <div style={{paddingLeft:"5px", fontWeight:"700"}}>
                           <span style={{fontSize:"16px"}}>1.</span>
                           <strong>Approve</strong><span class="busd"> BUSD </span><span class="usd">(<span id="user-approved-spend">0</span> BUSD approved)</span>
@@ -289,18 +400,19 @@ export default function Home() {
                           <input class="form-control" id="approve-spend" name="approved-spend" step="1" type="number" value="1000"/>
                           <button class="btn glow-on-hover" id="" onClick={() => approveMiner()} style={{marginTop:"5px"}}>Approve BUSD</button>
                         </div>
-                      </div>
+                      </div> */}
                       <strong>
                         <i class="bi-bank"></i>
-                        Deposit <span class="busd">BUSD</span>
+                        <span> Deposit</span>
+                        <span class="busd">BNB</span>
                         <span class="usd">
-                        ( min<span class="busd" id="min-deposit">0 </span>, 
+                        ( min<span class="busd" id="min-deposit"> 0.01 </span>, 
                         </span>	
                         <span class="usd">
                         max<span class="busd" id="max-deposit">0</span>)</span>
                         <input class="form-control" id="busd-spend" name="buy-miners" onChange={updateBuyPrice} step="100" type="number" value="100"/>
                       </strong>
-                      <button class="btn glow-on-hover" id="buy-eggs-btn" onclick="buyEggs()" role="button" disabled style={{marginTop:"5px"}}>
+                      <button class="btn glow-on-hover" id="buy-eggs-btn" onClick="buyEggs()" role="button" disabled style={{marginTop:"5px"}}>
                         Hire
                         <span id="eggs-to-buy">0</span>
                         Farmers
@@ -313,7 +425,7 @@ export default function Home() {
                     <div class="miners-info" style={{marginBottom:"unset"}}>
                       <div>
                         <i class="bi-minecart"></i>
-                        <span id="your-miners">- </span>
+                        <span id="your-miners"> - </span>
                         Farmers
                       </div>
                       <div>
@@ -321,51 +433,39 @@ export default function Home() {
                       </div>
                       <div style={{fontSize:"21px"}}>
                         <i class="ri-coins-line ri-1x"></i>
-                        <strong id="mined">-</strong>
-                        <span><strong class="busd">CROPS</strong></span>
+                        <strong id="mined"> -</strong>
+                        <span><strong class="busd"> CROPS</strong></span>
                       </div>
                       <div class="usd" style={{fontSize:"14px", padding:"15px 0 25px 0"}}>
                         <strong>Estimated daily yield</strong>
                         <div>
-                          <span id="eggs-per-day">0</span><strong class="busd">BUSD</strong>
+                          <span id="eggs-per-day">0</span><strong class="busd">BNB</strong>
                         </div>
                       </div>
                     </div>
                     <div>
                       <div class="timer">
-                        <i class="bi-hourglass-split"></i>
-                        Cart will be full in
-                      </div>
-                      <div style={{textAlign:"center", paddingBottom:"7px"}}>
-                        <span id="claim-timer">--:--:--</span>
-                      </div>
-                      <div class="timer">
                         <i class="bi-arrow-repeat"></i>
-                        Compound Count: 
+                        <span> Compound Count: </span>
                         <span id="compound-count"> 0</span>
                       </div>			
                       <div class="btn-container" style={{marginTop:"35px"}}>
-                        <div>
-                          <button class="btn glow-on-hover" id="withdraw" onclick="sellEggs()" role="button" disabled>
+                        <div style={{marginBottom:"20px"}}>
+                          <button class="btn glow-on-hover" id="withdraw" onClick="sellEggs()" role="button" disabled>
                             Harvest Crops
                             <span class="cooldown" id="cooldown-timer">in --:--:--</span>
                             <span class="tax" id="withdraw-tax">-60% tax</span>
                           </button>
                         </div>
+
                         <div>
-                          <button class="btn glow-on-hover" id="reinvest" onclick="hatchEggs()" role="button" disabled>
+                          <button class="btn glow-on-hover" id="reinvest" onClick="hatchEggs()" role="button" disabled>
                             Hire More Farmers
                             <span class="compound">
                               (<span class="compound" id="compound-bonus">+0% bonus</span>)
                             </span>
                           </button>
                         </div>
-                        <div class="timer" style={{padding:"16px"}}>
-                          <i class="bi bi-clock"></i>
-                          Time until next hire bonus is activated: 
-                          <span style={{fontWeight:"700"}}id="compound-timer"> --:--:--</span>
-                        </div>
-                        {/* <div style="padding: 16px;">Time until next hire bonus is activated: <span style="font-weight: 700;" id="compound-timer">--:--:--</div> */}
                       </div>
                     </div>
                   </div>
@@ -386,7 +486,7 @@ export default function Home() {
                 <span>when someone uses your referral link!</span>
                 <span>
                   <a id="reflink"></a>
-                  <span onclick="copyRef()">
+                  <span onClick="copyRef()">
                     <i class="ri-file-copy-line"></i>
                     <span id="copied"></span>
                   </span>
@@ -400,136 +500,35 @@ export default function Home() {
             <h4 style={{color:"#fff", justifyContent:"center", fontFamily:"cursive"}}><div class="busd">Frequently Asked Questions</div></h4>
             <div class="faq-list">
               <ul>
-                <li>
-                  <i class="bx bx-help-circle icon-help"></i>
-                  <a
-                    data-bs-toggle="collapse"
-                    class="collapse"
-                    data-bs-target="#faq-list-1"
-                    >What is the BUSD Crops Farmers?
-                    <i class="bx bx-chevron-down icon-show"></i>
-                    <i class="bx bx-chevron-up icon-close"></i>
-                  </a>
-                  <div
-                    id="faq-list-1"
-                    class="collapse show"
-                    data-bs-parent=".faq-list"
-                  >
-                    <p>
-                    The BUSD Crops Farmer is a decentralized application built on the Binance Smart Chain. 
-                    The object of the game is to hire more farmers sooner and more often than other players. This in turn earns you more BUSD faster. 
-                    These Farmers work for you tirelessly, giving you a daily average of 8% of your farmers' value.
-                    </p>
-                    <p>
-                    The daily percentage return depends on players' actions that are taken within the platform that impact the farmers's efficiency rate. 
-                    The farming efficiency rate rises and falls as users buy Farmers, re-hire your earnings and sell your Crops for BUSD. 
-                    </p>
-                    <p>
-                    Once Farmers are Bought, they cannot be sold, and the investment made to re-hire them (either through hire or re-hiring) cannot be taken back. 
-                    However, once bought, Farmers will not stop producing yield.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <i class="bx bx-help-circle icon-help"></i>
-                  <a
-                    data-bs-toggle="collapse"
-                    class="collapse"
-                    data-bs-target="#faq-list-2"
-                    >What makes it different from other similar platforms?
-                    <i class="bx bx-chevron-down icon-show"></i
-                    ><i class="bx bx-chevron-up icon-close"></i
-                  ></a>
-                  <div
-                    id="faq-list-2"
-                    class="collapse show"
-                    data-bs-parent=".faq-list"
-                  >
-                    <p> The BUSD Crops Farmer has several anti-dumping and anti-whale measures in place to ensure the longevity of the project. 
-                    These measures include maximum deposits, as well as a cutoff time AND a cooldown time for withdrawals.
-                    </p>
-                    <p>
-                    The cutoff time is the amount of time it will take for your "cart" to be full of rewards. 
-                    Once the bag is full, it will stop filling until you've taken some action in the game. 
-                    This is to prevent whales from letting their rewards accumulate for a long time, 
-                    and removes the false impression the contract value is going up when most of it is rewards the whale is waiting to withdraw at once.
-                    </p>
-                    <p>
-                    The withdraw cooldown time is the amount of time one has to wait before they can make another withdrawal. 
-                    This also prevents the contract balance from decreasing in value too fast. 
-                    If the team decides it's necessary to protect the contract balance, 
-                    this time period can be adjusted to slow down the rate of withdrawals, 
-                    but it can only be set to a value less than or equal to 24 hours (per contract rules).
-                    </p>
-                    <p>
-                    The compound count is the number of times the user has compounded. By default, the required compound count by the platform is 5, meaning the user will have to compound 5 times(compound once every 12 hours) before they can withdraw without the feedback tax of 60%. This feature in essense will ensure the longevity and stability of the project.
-                    </p>
-                    <p>
-                    To reward users who compound, 
-                    there is a bonus when you re-hire your daily crops earnings instead of selling them. 
-                    The bonus increases 2.5% every 12 hours that you compound without withdrawing (25% max after 5 days). 
-                    This incentivizes the user to compound more often, which will help boost the farms efficiency rate in the long run. 
-                    To be able to utilize the re-hire bonus feature, the player must not compound before the provided timer reaches 00:00:00.
-                    </p>
-                    <p>
-                    For the players who choose to not play the game and only sell, 
-                    there will be a 60% tax on those sells that will stay in the contract. 
-                    If the player makes two or more consecutive sells, this tax will be applied. 
-                    The only way for the user to not pay the 60% tax is to compound 5 times before making another withdrawal.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <i class="bx bx-help-circle icon-help"></i>
-                  <a
-                    data-bs-toggle="collapse"
-                    class="collapse"
-                    data-bs-target="#faq-list-3"
-                    >How does this platform work?
-                    <i class="bx bx-chevron-down icon-show"></i
-                    ><i class="bx bx-chevron-up icon-close"></i
-                  ></a>
-                  <div
-                    id="faq-list-3"
-                    class="collapse show"
-                    data-bs-parent=".faq-list">
-                    <p>
-                            This platform work similarly to a financial market, where an asset has intrinsic value that is relative to the supply or demand of said asset. 
-                      Farmers are purchased with a pre-determined currency at a price relative to the Farmers's current mining efficiency rate. 
-                      After the Farmers are purchased, they go to work for you right away to give you the best yield on your investment possible, 
-                      for as long as possible. Just as any other asset bought and sold on an open market, the price of a Farmers will fluctuate over time, 
-                      as will the mining efficiency rate, as you and other players recruit Farmers, compound earnings and sell earnings. 
-                      To put it plainly, the more demand for the Farmers, the more they will increase in value and the more yield they will produce. 
-                      Inversely, when the demand decreases, so will the value of the Farmers and their daily return on investment.
-                    </p>
-                    <p>
-                            The main difference between a this game and a traditional financial market is that a recruited Farmers cannot be sold, 
-                      only the value they provide can be sold. As the players of the game as a whole compound their earnings and make new deposits, 
-                      the game efficiency rate will stay relatively constant, but the moment players start to sell more than they are compounding, 
-                      the efficiency rate will begin to drop as to preserve the TVL and longevity of the game.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <i class="bx bx-help-circle icon-help"></i>
-                  <a
-                    data-bs-toggle="collapse"
-                    class="collapse"
-                    data-bs-target="#faq-list-4"
-                    >What is the recommended strategy?
-                    <i class="bx bx-chevron-down icon-show"></i
-                    ><i class="bx bx-chevron-up icon-close"></i
-                  ></a>
-                  <div
-                    id="faq-list-4"
-                    class="collapse show"
-                    data-bs-parent=".faq-list">
-                    <p>
-                      The best strategy that the team can recommend is to re-hire/compound for 6 days and harvest 1 day a week. 
-                      This will increase the users investment at the same time increasing the daily yield earnings. This strategy has already been tried and tested by several project and is proven effective both for the short and long term.
-                    </p>
-                  </div>
-                </li>
+                <Accordion>
+                  {faqData.map((item, index) => {
+                      return (
+                          // <Reveal key={index} className='onStep' keyframes={fadeInUp} delay={100 * index} duration={800}>
+                          <li>
+                            <div className='accordion-box'>
+                              <Accordion.Item eventKey={{ index }} style={{background:"transparent", border:"none"}}>
+                                <Accordion.Header>
+                                  <HelpOutlineIcon/>
+                                  &nbsp;&nbsp;
+                                  {/* <a
+                                    data-bs-toggle="collapse"
+                                    class="collapse"
+                                    data-bs-target="#faq-list-4"
+                                    > */}
+                                    {item.title}
+                                  {/* </a> */}
+                                </Accordion.Header>
+                                <Accordion.Body className="p-3">
+                                    {item.content}
+                                </Accordion.Body>
+                              </Accordion.Item>
+                            </div>
+                          </li>
+                          // </Reveal>
+                      )
+                  }
+                  )}
+                </Accordion>
               </ul>
             </div>
           </div>
@@ -539,7 +538,7 @@ export default function Home() {
       <footer id="footer">
         <div class="container">
           <div class="copyright">
-            © Copyright <strong><span>The Crops Farmer Team</span></strong>. All Rights Reserved
+            © Copyright <strong><span>The BNB Kingdom Team</span></strong>. All Rights Reserved
           </div>
         </div>
       </footer>
