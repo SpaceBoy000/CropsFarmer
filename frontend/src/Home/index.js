@@ -22,7 +22,6 @@ import "./myStyle.css"
 import "./bootstrap-icons/bootstrap-icons.css"
 import "./boxicons/css/boxicons.min.css"
 import "./remixicon/remixicon.css"
-import FAQ from "./components/FAQ"
 import { Accordion, Col, Row } from "react-bootstrap";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
