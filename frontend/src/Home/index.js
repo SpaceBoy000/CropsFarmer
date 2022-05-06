@@ -17,13 +17,14 @@ import esIcon from "../assets/ESIcon.png";
 import tgIcon from "../assets/TGIcon.png";
 import twIcon from "../assets/TWIcon.png";
 import img1 from "../assets/img1.png"
-import { connect, hireFarmers, updateBuyPrice } from './main_eth';
+import { connect, hireFarmers, hireMoreFarmers, sellCrops, copyRef, updateBuyPrice } from './main_eth';
 import "./myStyle.css"
 import "./bootstrap-icons/bootstrap-icons.css"
 import "./boxicons/css/boxicons.min.css"
 import "./remixicon/remixicon.css"
 import { Accordion, Col, Row } from "react-bootstrap";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { useState } from "react";
 
 const faqData = [
   {
@@ -139,6 +140,12 @@ const Wrapper = styled("div")(({ theme }) => ({
 
 export default function Home() {
   const { address } = useAuthContext();
+  const [open, setOpen] = useState(false);
+  const [busd, setBUSD] = useState(0.01);
+
+  const handleBUSD = (e) => {
+    setBUSD(e.target.value);
+  }
 
   return (
     <div>
@@ -152,26 +159,8 @@ export default function Home() {
           </div>
           <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
-              {/* <li>
-                <a class="nav-link" href="./assets/img/The BUSD Crops Farmer.pdf" target="_blank"><img class="nav-logo" id="logo" alt="" src="./assets/img/ccs-audit.png"></img><strong>Audited by CyberCrimeShield™</strong></a>
-              </li> */}
-              {/* <a class=" scrollto bnb-miner glow-on-hover" href="" target="_blank">BNB Crops Farmer Soon!</a> */}
-              {/* <li> 
-                <a class="nav-link" href="https://pancakeswap.finance/swap?outputCurrency=0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56" target="_blank"><img class="nav-logo" id="logo" alt="" src="./assets/img/pancakeswap.svg"></img><strong>Buy BUSD</strong></a>
-              </li>	  */}
-              {/* <li>
-                <a class="nav-link scrollto" href="#faq">FAQs</a>
-              </li> */}
-              {/* <div class="dropdown">
-                <button class="dropbtn"><img class="nav-logo" id="logo" alt="" src="./assets/img/crobfarmerllogo.png"/>Farms</button>
-                <div class="dropdown-content">
-                  <a href="https://bit.ly/3MDcrxv"><img class="nav-logo" id="logo" alt="" src="./assets/img/crobfarmerllogo.png"/>BNB-BSC Crop Farmer</a>
-                  <a href="https://bit.ly/3k0ODr1"><img class="nav-logo" id="logo" alt="" src="./assets/img/cropslogo.PNG"/>USDC-AVAX Crop Farmer</a>
-                </div>
-              </div> */}
               <li>
-                {/* <a class="nav-link" href="https://testnet.bscscan.com/address/0xa4be7b9f36495d07a1b1753c38cabc286af53757#code" target="_blank"><img class="nav-logo" id="logo" alt="" src="assets/img/bscscan-logo-light-circle.svg"></img><strong>Contract</strong></a> */}
-                  <a class="nav-link" href="https://bscscan.com/address/0x8be8881C641Dc5A40845253Ee3eD04955eDFe96D#code" target="_blank"><img class="nav-logo" id="logo" alt="" src="./assets/img/bscscan-logo-light-circle.svg"></img><strong>Contract</strong></a>
+                <a class="nav-link" href="https://bscscan.com/address/0x8be8881C641Dc5A40845253Ee3eD04955eDFe96D#code" target="_blank"><img class="nav-logo" id="logo" alt="" src="./assets/img/bscscan-logo-light-circle.svg"></img><strong>Contract</strong></a>
               </li>
               <li>
                 <a class="nav-link" href="https://twitter.com/BUSDCropFarmer" target="_blank"><img class="nav-logo" id="twitter" alt="" src="./assets/img/twitter.svg"></img><strong>Twitter</strong></a>
@@ -185,8 +174,30 @@ export default function Home() {
                 </a>
               </li>
             </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
+            <i class="bi bi-list mobile-nav-toggle" onClick={() => {setOpen(!open); console.log("open => ", open); }}></i>
           </nav>
+          {open && (
+            <nav id="navbar" class="navbar order-last order-lg-0 navbar-mobile">
+              <ul>
+                <li>
+                  <a class="nav-link" href="https://bscscan.com/address/0x8be8881C641Dc5A40845253Ee3eD04955eDFe96D#code" target="_blank"><img class="nav-logo" id="logo" alt="" src="./assets/img/bscscan-logo-light-circle.svg"></img><strong>Contract</strong></a>
+                </li>
+                <li>
+                  <a class="nav-link" href="https://twitter.com/BUSDCropFarmer" target="_blank"><img class="nav-logo" id="twitter" alt="" src="./assets/img/twitter.svg"></img><strong>Twitter</strong></a>
+                </li> 
+                <li>
+                  <a class="nav-link" href="https://t.me/busdcropfarmer" target="_blank"><img class="nav-logo" id="telegram" alt="" src="./assets/img/telegram.svg"></img><strong>Telegram</strong></a>
+                </li>
+                <li>
+                  <a class="nav-link" >
+                    <button id="enableMetamask" class="btn connect-btn" onClick={connect}>Connect</button>
+                  </a>
+                </li>
+              </ul>
+              <i class="bi bi-x mobile-nav-toggle" onClick={() => {setOpen(!open); console.log("open => ", open); }}></i>
+            </nav>
+          )}
+          
         </div>
       </div>
 
@@ -299,7 +310,7 @@ export default function Home() {
         <div id="mine" class="bg d-flex">
           <div class="container main" data-aos="fade-up">
             <div class="content-box">
-              <h4 style={{color:"#fff", fontWeight:"bold", fontFamily:"cursive", justifyContent:"center", letterSpacing:"2px", marginLeft:"5px", fontSize:"2rem"}} ><div class="busd">Farmer Dashboard</div></h4>
+              <h4 style={{color:"#fff", fontWeight:"bold", fontFamily:"cursive", justifyContent:"center", letterSpacing:"2px", fontSize:"2rem", textAlign:"center"}} ><div class="busd">Farmer Dashboard</div></h4>
               <div class="row stats-row-container">
                 <div class="col-lg-2 stat">
                   <div class="header">
@@ -348,7 +359,7 @@ export default function Home() {
                 </div>
               </div>
               <div class="row mt-5" style={{justifyContent:"space-evenly"}}>
-                <div class="col-xl-5 first-box">
+                <div class="col-xl-5 first-box" style={{marginBottom:"20px"}}>
                   <div class="mine-card">
                     <div class="row example">
                       <div class="col-lg-8">
@@ -379,14 +390,14 @@ export default function Home() {
                     </div>
                     <div class="timer">
                       <i class="bi-hourglass-split"></i>
-                      <span> Cart will be full in</span>
-                    </div>
-                    <div style={{textAlign:"center"}}>
+                      <span> Cart will be full in: </span>
                       <span id="claim-timer">--:--:--</span>
                     </div>
                     <div class="timer" style={{padding:"14px"}}>
                       <i class="bi bi-clock"></i>
                       <span> Time until next hire bonus is activated: </span>
+                    </div>
+                    <div style={{textAlign:"center"}}>
                       <span style={{fontWeight:"700"}}id="compound-timer"> --:--:--</span>
                     </div>
                     <div class="btn-container">
@@ -405,21 +416,21 @@ export default function Home() {
                         <span> Deposit</span>
                         <span class="busd">BNB</span>
                         <span class="usd">
-                        ( min<span class="busd" id="min-deposit"> 0.01 </span>, 
+                        ( min<span class="busd" id="min-deposit"> 0 </span>, 
                         </span>	
                         <span class="usd">
                         max<span class="busd" id="max-deposit">0</span>)</span>
-                        <input class="form-control" id="busd-spend" name="buy-miners" onChange={updateBuyPrice} step="100" type="number" value="100"/>
+                        <input class="form-control" id="busd-spend" name="buy-miners" onChange={handleBUSD} step="1" type="number" value={busd}/>
                       </strong>
-                      <button class="btn glow-on-hover" id="buy-eggs-btn" onClick={ () => hireFarmers() } role="button" disabled style={{marginTop:"5px"}}>
-                        Hire
+                      <button class="btn glow-on-hover" id="buy-eggs-btn" onClick={ hireFarmers } role="button" style={{marginTop:"5px"}}>
+                        <span>Hire </span>
                         <span id="eggs-to-buy">0</span>
-                        Farmers
+                        <span> Farmers</span>
                       </button>
                     </div>
                   </div>
                 </div>
-                <div class="col-xl-5">
+                <div class="col-xl-5" style={{marginBottom:"20px"}}>
                   <div class="mine-card">
                     <div class="miners-info" style={{marginBottom:"unset"}}>
                       <div>
@@ -450,7 +461,7 @@ export default function Home() {
                       </div>			
                       <div class="btn-container" style={{marginTop:"35px"}}>
                         <div style={{marginBottom:"20px"}}>
-                          <button class="btn glow-on-hover" id="withdraw" onClick="sellCrops()" role="button" disabled>
+                          <button class="btn glow-on-hover" id="withdraw" onClick={ sellCrops } role="button">
                             Harvest Crops
                             <span class="cooldown" id="cooldown-timer">in --:--:--</span>
                             <span class="tax" id="withdraw-tax">-60% tax</span>
@@ -458,7 +469,7 @@ export default function Home() {
                         </div>
 
                         <div>
-                          <button class="btn glow-on-hover" id="reinvest" onClick="hireMoreFarmers()" role="button" disabled>
+                          <button class="btn glow-on-hover" id="reinvest" onClick={ hireMoreFarmers } role="button">
                             Hire More Farmers
                             <span class="compound">
                               (<span class="compound" id="compound-bonus">+0% bonus</span>)
@@ -485,7 +496,7 @@ export default function Home() {
                 <span>when someone uses your referral link!</span>
                 <span>
                   <a id="reflink"></a>
-                  <span onClick="copyRef()">
+                  <span onClick={copyRef}>
                     <i class="ri-file-copy-line"></i>
                     <span id="copied"></span>
                   </span>
@@ -496,7 +507,7 @@ export default function Home() {
         </div>
         <div id="faq" class="bg faq section-bg">
           <div class="container" data-aos="fade-up">
-            <h4 style={{color:"#fff", justifyContent:"center", fontFamily:"cursive"}}><div class="busd">Frequently Asked Questions</div></h4>
+            <h4 style={{color:"#fff", justifyContent:"center", fontFamily:"cursive", marginTop:"20px", textAlign:"center"}}><div class="busd">Frequently Asked Questions</div></h4>
             <div class="faq-list">
               <ul>
                 <Accordion>

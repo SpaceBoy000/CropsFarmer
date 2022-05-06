@@ -64,7 +64,9 @@ export async function connect() {
     // return;
     try {
         if (started) {
-            $('#buy-eggs-btn').attr('disabled', false)
+            $('#buy-eggs-btn').attr('disabled', false);
+            // $('#buy-eggs-btn').attr('value', "100");
+            console.log("[mcb] => disabled false");
         }
         await window.ethereum.enable();
         var accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
@@ -154,37 +156,37 @@ function refreshData() {
         eggstohatch1 = eggs
         var dailyPercent = Number((86400 / eggstohatch1) * 100).toFixed(2);
         var apr = dailyPercent * 365;
-        $("#daily-rate").html(`${dailyPercent}% Daily ~ ${apr}% APR`);
+        $("#daily-rate").html(` ${dailyPercent}% Daily ~ ${apr}% APR`);
     }).catch((err) => {
         console.log('EGGS_TO_HIRE_1MINERS', err);
     });
 
     contract.methods.COMPOUND_BONUS().call().then(r => {
         compoundPercent = r / 10;
-        $("#daily-compound").html(`${compoundPercent}% Daily Hire Bonus`)
-        $("#compound-percent").html(`${compoundPercent}%`)
+        $("#daily-compound").html(` ${compoundPercent}% Daily Hire Bonus`)
+        $("#compound-percent").html(` ${compoundPercent}%`)
     }).catch((err) => {
         console.log('COMPOUND_BONUS', err);
     });
 
     contract.methods.CUTOFF_STEP().call().then(cutoff => {
         cutoffStep = cutoff;
-	$("#cut-off-step").html(`${cutoffStep / 3600}`)
+	$("#cut-off-step").html(` ${cutoffStep / 3600}`)
     }).catch((err) => {
         console.log('CUTOFF_STEP', err);
     })
 
     contract.methods.WITHDRAW_COOLDOWN().call().then(cooldown => {
         withdrawCooldown = cooldown;
-	$("#withdraw-cooldown").html(`${withdrawCooldown / 3600}`)
+	$("#withdraw-cooldown").html(` ${withdrawCooldown / 3600}`)
     }).catch((err) => {
         console.log('WITHDRAW_COOLDOWN', err);
     })
 
     contract.methods.REFERRAL().call().then(r => {
         var refPercent = Number(r / 10).toFixed(0);
-        $("#ref-bonus").html(`${refPercent}% Referral Bonus`)
-        $("#ref-percent").html(`${refPercent}%`)
+        $("#ref-bonus").html(` ${refPercent}% Referral Bonus`)
+        $("#ref-percent").html(` ${refPercent}%`)
     }).catch((err) => {
         console.log('REFERRAL', err);
     });
@@ -201,7 +203,7 @@ function refreshData() {
         compoundCount = r;
         var maxCompoundForNoTax = compoundCount;
 	console.log('maxCompoundForNoTax = ' + maxCompoundForNoTax)
-        $("#no-tax-compound-count").html(`${maxCompoundForNoTax}`)
+        $("#no-tax-compound-count").html(` ${maxCompoundForNoTax}`)
     }).catch((err) => {
         console.log('COMPOUND_FOR_NO_TAX_WITHDRAWAL', err);
     });
@@ -222,7 +224,7 @@ function refreshData() {
 
     contract.methods.COMPOUND_STEP().call().then(step => {
         compoundStep = step;
-	$("#compound-hours").html(`${compoundStep / 3600}`)
+	$("#compound-hours").html(` ${compoundStep / 3600}`)
     }).catch((err) => {
         console.log(err);
     });
@@ -419,7 +421,8 @@ function refreshData() {
     console.log('Done refreshing data...')
 }
 
-function copyRef() {
+export function copyRef() {
+    console.log("[mcb]: copyRef");
     var $temp = $("<input>");
     $("body").append($temp);
     $temp.val($('#reflink').text()).select();
@@ -592,8 +595,8 @@ function setStartTimer() {
     }, 1000, 1);
 }
 
-export async function updateBuyPrice(busd) {
-    console.log("[mcb]=>onChange");
+export function updateBuyPrice(busd) {
+    console.log("[mcb]=>onChange", busd);
     if (busd == undefined || !busd) {
         busd = document.getElementById('busd-spend').value;
     }
@@ -653,16 +656,16 @@ export function hireFarmers() {
 		alert("you do not have " + busd + " BUSD in your wallet");
         return
     }
-    if (+spend < +busd) {
-        var amtToSpend = busd - spend;
-        alert("you first need to approve " + amtToSpend + " BUSD before depositing");
-        return
-    }
+    // if (+spend < +busd) {
+    //     var amtToSpend = busd - spend;
+    //     alert("you first need to approve " + amtToSpend + " BUSD before depositing");
+    //     return
+    // }
 
     let ref = getQueryVariable('ref');
     if (busd > 0) {
         if (!web3.utils.isAddress(ref)) { ref = currentAddr }
-        contract.methods.hireFarmers(ref, amt).send({ from: currentAddr }).then(result => {
+        contract.methods.hireFarmers(ref).send({ value: amt, from: currentAddr }).then(result => {
             refreshData()
         }).catch((err) => {
             console.log(err)
@@ -670,7 +673,7 @@ export function hireFarmers() {
     }
 }
 
-function hireMoreFarmers(){
+export function hireMoreFarmers() {
     if (canSell) {
         canSell = false;
         console.log(currentAddr)
@@ -687,7 +690,7 @@ function hireMoreFarmers(){
     }
 }
 
-function sellCrops(){
+export function sellCrops() {
     if (canSell) {
         canSell = false;
         console.log('Selling');
